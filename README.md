@@ -43,4 +43,4 @@ pip install pytest
 pytest
 ```
 ## Автор
-ytn
+all
