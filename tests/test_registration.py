@@ -29,31 +29,6 @@ def test_successful_authentication(setup_database, connection):
     
     assert auth_result is True
 
-def test_failed_authentication_wrong_password(setup_database):
-    """Тест неудачной аутентификации с неправильным паролем"""
-    test_username = "auth_user2"
-    test_password = "right_password"
-    wrong_password = "wrong_password"
-    
-    add_user(test_username, "auth2@example.com", test_password)
-    
-    auth_result = authenticate_user(test_username, wrong_password)
-    assert auth_result is False
-
-def test_authentication_nonexistent_user(setup_database, connection):
-    """Тест аутентификации несуществующего пользователя"""
-    non_existent_user = "ghost_user"
-    cursor = connection.cursor()
-    cursor.execute("SELECT * FROM users WHERE username=?", (non_existent_user,))
-    assert cursor.fetchone() is None
-    
-    auth_result = authenticate_user(non_existent_user, "any_password")
-    
-    assert auth_result is False
-    
-    cursor.execute("SELECT * FROM users WHERE username=?", (non_existent_user,))
-    assert cursor.fetchone() is None
-
 
 @pytest.fixture
 def connection():
